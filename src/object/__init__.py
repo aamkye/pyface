@@ -9,13 +9,30 @@ class object:
         'speed':None,
         'angle':None,
         'aliveTime':None,
-        'color':None
+        'color': None
     }
 
-    def __init__(self, id, x=900, y=700, size=random.randrange(1, 10), speed=None, angle=None, aliveTime=None, color=None):
-        self.data = {'id':id, 'x':x, 'y':y, 'size':size, 'speed':speed, 'angle':angle, 'aliveTime':aliveTime, 'color':color}
+    def __init__(self,
+            id,
+            x=0,
+            y=0,
+            size=None,
+            speed=None,
+            angle=None,
+            aliveTime=None,
+            color=None):
+        self.data = {
+            'id': id,
+            'x': x,
+            'y': y,
+            'size': size if size is not None else 1,
+            'speed': speed if speed is not None else random.randrange(1, 2, 1),
+            'angle': angle if angle is not None else random.randrange(0, 359,2),
+            'aliveTime': aliveTime if aliveTime is not None else random.randrange(100, 800, 50),
+            'color': color if color is not None else random.randrange(128, 254, 8)}
 
     def calculateNewPos(self):
+        # Gatger old data
         old_x, old_y = self.data['x'], self.data['y']
         angle = float(self.data['angle'])
         # Compute the change in position
@@ -24,6 +41,3 @@ class object:
         # Add that to the existing position
         self.data['x'] = round(old_x + delta_x)
         self.data['y'] = round(old_y + delta_y)
-
-    def getPos(self):
-        print("%0.2f, %0.2f" % self.data['x'], self.data['y'])

@@ -26,12 +26,12 @@ class object:
             'x': x,
             'y': y,
             'size': size if size is not None else 1,
-            'speed': speed if speed is not None else random.randrange(1, 2, 1),
-            'angle': angle if angle is not None else random.randrange(0, 359,2),
-            'aliveTime': aliveTime if aliveTime is not None else random.randrange(100, 800, 50),
-            'color': color if color is not None else random.randrange(128, 254, 8)}
+            'speed': speed if speed is not None else random.uniform(1, 2),
+            'angle': angle if angle is not None else random.uniform(0, 359),
+            'aliveTime': aliveTime if aliveTime is not None else random.uniform(100, 800),
+            'color': color if color is not None else random.uniform(128, 254)}
 
-    def calculateNewPos(self):
+    def calculateNewPos(self) -> 'object':
         # Gatger old data
         old_x, old_y = self.data['x'], self.data['y']
         angle = float(self.data['angle'])
@@ -41,3 +41,5 @@ class object:
         # Add that to the existing position
         self.data['x'] = round(old_x + delta_x)
         self.data['y'] = round(old_y + delta_y)
+
+        return self

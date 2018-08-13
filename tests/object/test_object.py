@@ -1,4 +1,6 @@
 import pytest
+import numpy as np
+
 from src.object import object
 
 def test_instance():
@@ -7,25 +9,23 @@ def test_instance():
 
 def test_assign():
     obj = object(0)
-    assert(obj.data['id'] == 0)
-    assert(obj.data['x'] == 0)
-    assert(obj.data['y'] == 0)
-    assert(obj.data['size'] != None and 1 <= obj.data['size'] <= 10)
-    assert(obj.data['speed'] != None and 1 <= obj.data['speed'] <= 100)
-    assert(obj.data['angle'] != None and 0 <= obj.data['angle'] <= 359)
-    assert(obj.data['aliveTime'] != None and 10 <= obj.data['aliveTime'] <= 750)
+    assert(obj.id == 0)
+    np.testing.assert_array_equal(obj.point, np.array((0,0)))
+    assert(obj.size != None and 1 <= obj.size <= 10)
+    assert(obj.speed != None and 1 <= obj.speed <= 100)
+    assert(obj.angle != None and 0 <= obj.angle <= 359)
+    assert(obj.aliveTime != None and 100 <= obj.aliveTime <= 800)
 
 @pytest.mark.parametrize(
-    ('x','y','new_x','new_y','angle','speed', 'retry'), [
-        (100, 100,  100,  100,  90,  10, 0),
-        (100, 100,  107,  107,  45,  10, 1),
-        (  0,   0,  -20,  -20, 225,  14, 2),
-        (-10, -10, -100, -100, 225,  14, 9),
-        (  0, 100,    0, -400, 180, 100, 5)
+    ('point','new_point','angle','speed', 'retry'), [
+        (np.array((100, 100)), np.array(( 100,  100)),  90,  10, 0),
+        (np.array((100, 100)), np.array(( 107,  107)),  45,  10, 1),
+        (np.array((  0,   0)), np.array(( -20,  -20)), 225,  14, 2),
+        (np.array((-10, -10)), np.array((-100, -100)), 225,  14, 9),
+        (np.array((  0, 100)), np.array((   0, -400)), 180, 100, 5)
     ])
-def test_compute_position(x, y, new_x, new_y, angle, speed, retry):
-    obj = object(0, x, y, None, speed, angle, 200)
+def test_compute_position(point, new_point, angle, speed, retry):
+    obj = object(id=0, point=point, speed=speed, angle=angle, aliveTime=10)
     for a in range(0, retry):
         obj.calculateNewPos()
-    assert(obj.data['x'] == new_x)
-    assert(obj.data['y'] == new_y)
+    np.testing.assert_array_equal(obj.point, new_point)

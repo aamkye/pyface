@@ -1,29 +1,19 @@
 import numpy as np
 
 class object:
-    id=None
-    point=None
-    size=None
-    speed=None
-    angle=None
-    aliveTime=None
-    color=None
-
     def __init__(self,
             id,
-            point=np.array((0,0)),
-            size=None,
-            speed=None,
-            angle=None,
-            aliveTime=None,
-            color=None):
-        self.id=id
-        self.point=point
-        self.size=size if size is not None else 1
-        self.speed=speed if speed is not None else np.random.randint(1, 2)
-        self.angle=angle if angle is not None else np.random.randint(0, 359)
-        self.aliveTime=aliveTime if aliveTime is not None else np.random.randint(100, 800)
-        self.color=color if color is not None else np.random.randint(128, 254)
+            point = np.array((0,0)),
+            speed = None,
+            angle = None,
+            aliveTime = None,
+            color = None):
+        self.id = id
+        self.point = point
+        self.speed = speed if speed is not None else np.random.randint(1, 2)
+        self.angle = angle if angle is not None else np.random.randint(0, 359)
+        self.aliveTime = aliveTime if aliveTime is not None else np.random.randint(100, 800)
+        self.color = color if color is not None else np.random.randint(128, 254)
 
     def calculateNewPos(self) -> 'object':
         # Gatger old data

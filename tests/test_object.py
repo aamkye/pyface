@@ -11,7 +11,6 @@ def test_assign():
     obj = object(0)
     assert(obj.id == 0)
     np.testing.assert_array_equal(obj.point, np.array((0,0)))
-    assert(obj.size != None and 1 <= obj.size <= 10)
     assert(obj.speed != None and 1 <= obj.speed <= 100)
     assert(obj.angle != None and 0 <= obj.angle <= 359)
     assert(obj.aliveTime != None and 100 <= obj.aliveTime <= 800)

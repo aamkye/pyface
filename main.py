@@ -18,7 +18,7 @@ __break = False
 
 regenerate = pygame.USEREVENT + 1
 pygame.event.set_allowed([pygame.QUIT, pygame.VIDEORESIZE, pygame.MOUSEMOTION, regenerate])
-pygame.time.set_timer(regenerate, 50)
+pygame.time.set_timer(regenerate, 40)
 objFactory = objectFactory(limit=64, mode=0, bounds=screenSize)
 mousePos=(0, 0)
 while not __break:
@@ -43,8 +43,8 @@ while not __break:
             objFactory.recalculateObjects()
             width = np.ceil(objFactory.bounds[0]/2)
             height = np.ceil(objFactory.bounds[1]/2)
-            first_distance=396
-            second_distance=128
+            first_distance=256
+            second_distance=64
 
             points=[
                 objFactory.pointArr(point=np.array(((width/4)*3, (height/2)*1)), first_distance=first_distance, second_distance=second_distance), # DOT 1
@@ -53,11 +53,11 @@ while not __break:
                 objFactory.pointArr(point=np.array(((width/4)*5, (height/2)*3)), first_distance=first_distance, second_distance=second_distance), # DOT 4
                 objFactory.pointArr(point=np.array(((width/2)*1, height)),       first_distance=first_distance, second_distance=second_distance), # MIDDLE DOT 1
                 objFactory.pointArr(point=np.array(((width/2)*3, height)),       first_distance=first_distance, second_distance=second_distance), # MIDDLE DOT 2
-                objFactory.pointArr(point=np.array((2,           2)),            first_distance=first_distance, second_distance=second_distance), # CORNER DOT 1
-                objFactory.pointArr(point=np.array((2*width-2,   2)),            first_distance=first_distance, second_distance=second_distance), # CORNER DOT 2
-                objFactory.pointArr(point=np.array((2,           2*height-2)),   first_distance=first_distance, second_distance=second_distance), # CORNER DOT 3
-                objFactory.pointArr(point=np.array((2*width-2,   2*height-2)),   first_distance=first_distance, second_distance=second_distance), # CORNER DOT 4
-                objFactory.pointArr(point=np.array((width,       height)),       first_distance=first_distance, second_distance=second_distance), # CENTER DOT 1
+                objFactory.pointArr(point=np.array((2,           2)),            first_distance=2*first_distance, second_distance=2*second_distance), # CORNER DOT 1
+                objFactory.pointArr(point=np.array((2*width-2,   2)),            first_distance=2*first_distance, second_distance=2*second_distance), # CORNER DOT 2
+                objFactory.pointArr(point=np.array((2,           2*height-2)),   first_distance=2*first_distance, second_distance=2*second_distance), # CORNER DOT 3
+                objFactory.pointArr(point=np.array((2*width-2,   2*height-2)),   first_distance=2*first_distance, second_distance=2*second_distance), # CORNER DOT 4
+                objFactory.pointArr(point=np.array((width,       height)),       first_distance=2*first_distance, second_distance=2*second_distance), # CENTER DOT 1
             ]
 
             if pygame.mouse.get_focused():

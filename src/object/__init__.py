@@ -1,6 +1,8 @@
 import numpy as np
+from src.counterDecorator import *
 
 class object:
+    @calls.count
     def __init__(self,
             id,
             point = np.array((0,0)),
@@ -14,18 +16,21 @@ class object:
         self.angle = angle if angle is not None else np.random.randint(0, 359)
         self.aliveTime = aliveTime if aliveTime is not None else np.random.randint(100, 800)
         self.color = color if color is not None else np.random.randint(128, 254)
+        self.trajectory = None
+        self.conected = False
 
-    def calculateNewPos(self) -> 'object':
-        # Gatger old data
-        old_x = self.point[0]
-        old_y = self.point[1]
-
+    @calls.count
+    def getTrajectory(self):
         angle = float(self.angle)
-        # Compute the change in position
         delta_y = self.speed * np.cos(np.radians(angle))
         delta_x = self.speed * np.sin(np.radians(angle))
-        # Add that to the existing position
-        self.point[0] = np.round(old_x + delta_x)
-        self.point[1] = np.round(old_y + delta_y)
+        self.trajectory = np.array((delta_x, delta_y))
+
+    @calls.count
+    def calculateNewPos(self) -> 'object':
+        if(self.trajectory is None):
+            self.getTrajectory()
+        self.point[0] = np.round(self.point[0] + self.trajectory[0])
+        self.point[1] = np.round(self.point[1] + self.trajectory[1])
 
         return self

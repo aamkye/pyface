@@ -24,8 +24,12 @@ objFactory = objectFactory(limit=128, bounds=screenSize, maxConnectionsPerPoint=
 mousePos=(0, 0)
 run = False
 myfont = pygame.font.SysFont("Ubuntu Mono", 14)
-framerate = 30
-
+framerate = 25
+lines = list()
+start = 0
+end = 0
+diff = 0
+delay = 0
 
 while not __break:
     start = time.time()
@@ -101,23 +105,24 @@ while not __break:
             pygame.draw.line(screen, (obj.color ,obj.color ,obj.color), (obj.point[0]+2, obj.point[1]) , (obj.point[0]-2, obj.point[1]), 1)
             pygame.draw.line(screen, (obj.color ,obj.color ,obj.color), (obj.point[0], obj.point[1]+2) , (obj.point[0], obj.point[1]-2), 1)
 
-        labelFramerate =                   "Target framerate:       %d" %(int(framerate),)
-        labelPoints =                      "Total points:           %d" %(len(objFactory.objects),)
-        labelLines =                       "Total lines:            %d" %(len(lines),)
-        labelDistance =                    "Connection distance:    %d" %(objFactory.connectionDistance,)
-        labelMaxConnectionsPerPoint =      "Max connections:        %d" %(objFactory.maxConnectionsPerPoint,)
-        labelOps =                         "Total math operations:  %.2E" %(Decimal(calls.sum()),)
-        screen.blit(myfont.render(labelOps, 1, (255,255,0)), (10, 11))
-        screen.blit(myfont.render(labelFramerate, 1, (255,255,0)), (10, 22))
-        screen.blit(myfont.render(labelPoints, 1, (255,255,0)), (10, 33))
-        screen.blit(myfont.render(labelLines, 1, (255,255,0)), (10, 44))
-        screen.blit(myfont.render(labelDistance, 1, (255,255,0)), (10, 55))
-        screen.blit(myfont.render(labelMaxConnectionsPerPoint, 1, (255,255,0)), (10, 66))
+        prints = [
+            "Total math operations: %.2E" %(Decimal(calls.sum()),),
+            "Target framerate:      %.1d" %(int(framerate),),
+            "Total points:          %.1d" %(len(objFactory.objects),),
+            "Total lines:           %.1d" %(len(lines),),
+            "Connection distance:   %.1d" %(objFactory.connectionDistance,),
+            "Max connections:       %.1d" %(objFactory.maxConnectionsPerPoint,),
+            "Delay:                 %.1d" %(delay*1000,),
+        ]
 
-    pygame.display.flip()
+        for key, value in enumerate(prints):
+            screen.blit(myfont.render(value, 1, (255,255,0)), (11, 11*(key+1)))
+
+        pygame.display.flip()
 
     end = time.time()
     diff = end - start
     delay = 1.0 / framerate - diff
+
     if delay > 0:
         time.sleep(delay)

@@ -11,7 +11,6 @@ from src.objectFactory import objectFactory
 pygame.init()
 pygame.display.set_caption("Le Dot")
 
-
 screenSize = (700, 500)
 screen = pygame.display.set_mode(screenSize, pygame.RESIZABLE)
 screen.set_alpha(None)
@@ -90,6 +89,7 @@ while not __break:
             # points.append(np.array((mousePos[0], mousePos[1])))
 
         lines =  objFactory.getWeb(points)
+
         # PRINT WEB
         # Print lines
         for line in lines:

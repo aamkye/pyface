@@ -8,7 +8,7 @@ class objectFactory:
     newPoint=collections.namedtuple('Point', ['object', 'distance'])
 
     # Setters
-    def setObjects(self, x: list):
+    def setObjects(self, x: list()):
         self.objects = x
         return self
 
@@ -20,7 +20,7 @@ class objectFactory:
         self.limit = x
         return self
 
-    def setBounds(self, x: np.array):
+    def setBounds(self, x: np.array(())):
         self.bounds = x
         return self
 
@@ -34,10 +34,10 @@ class objectFactory:
 
     @calls.count
     def __init__(self,
-            limit = 20,
-            bounds = (900, 700),
-            maxConnectionsPerPoint = 10,
-            connectionDistance = 256):
+            limit: int = 20,
+            bounds: np.array(()) = (900, 700),
+            maxConnectionsPerPoint: int = 10,
+            connectionDistance: int = 256):
         self.setObjects(list())
         self.setCounter(collections.Counter('id'))
         self.setLimit(limit)
@@ -84,11 +84,11 @@ class objectFactory:
         return self
 
     @calls.count
-    def getDistance(self, p0:np.array, p1: np.array) -> int:
+    def getDistance(self, p0: np.array(()), p1: np.array(())) -> int:
         return np.linalg.norm((p0 - p1))
 
     @calls.count
-    def getClosestToPoint(self, point: np.array) -> list():
+    def getClosestToPoint(self, point: np.array(())) -> list():
         objList = list()
         def filter(x):
             return x.point[0] < point[0] - self.connectionDistance or \
@@ -108,7 +108,7 @@ class objectFactory:
         return np.abs(np.ceil(255 - d0 / (self.connectionDistance / 255)))
 
     @calls.count
-    def getWeb(self, point_array: [np.array]) -> list():
+    def getWeb(self, point_array: [np.array(())]) -> list():
         lines = []
 
         for point_obj in point_array:

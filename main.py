@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 import pygame
+import pygame.font
 import threading
 import time
 import numpy as np
@@ -9,6 +12,7 @@ from src.object import object
 from src.objectFactory import objectFactory
 
 pygame.init()
+pygame.font.init()
 pygame.display.set_caption("Le Dot")
 
 screenSize = (700, 500)
@@ -19,11 +23,11 @@ clock = pygame.time.Clock()
 __break = False
 
 pygame.event.set_allowed([pygame.QUIT, pygame.VIDEORESIZE, pygame.MOUSEMOTION, pygame.KEYDOWN])
-objFactory = objectFactory(limit=128, bounds=screenSize, maxConnectionsPerPoint=10, connectionDistance=256)
+objFactory = objectFactory(limit=128, bounds=screenSize, maxConnectionsPerPoint=20, connectionDistance=256)
 mousePos=(0, 0)
 run = False
 myfont = pygame.font.SysFont("Ubuntu Mono", 14)
-framerate = 25
+framerate = 50
 lines = list()
 start = 0
 end = 0
@@ -53,6 +57,20 @@ while not __break:
                     objFactory.limit = 32
                 else:
                     objFactory.limit -= 16
+            elif event.key == pygame.K_s:
+                objFactory.maxConnectionsPerPoint += 1
+            elif event.key == pygame.K_x:
+                if objFactory.maxConnectionsPerPoint <= 2:
+                    objFactory.maxConnectionsPerPoint = 2
+                else:
+                    objFactory.maxConnectionsPerPoint -= 1
+            elif event.key == pygame.K_d:
+                framerate += 10
+            elif event.key == pygame.K_c:
+                if framerate <= 10:
+                    framerate = 10
+                else:
+                    framerate -= 10
         #     print("User pressed a key.")
         # elif event.type == pygame.KEYUP:
         #     print("User let go of a key.")
